@@ -9,10 +9,11 @@
     "@mui/material": "^5.14.13",
     "@reduxjs/toolkit": "^1.9.7",
     "@testing-library/jest-dom": "^5.17.0",
-    "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
+    "axios": "^1.5.1",
     "dotenv": "^16.3.1",
     "formik": "^2.4.5",
+    "nodemon": "^3.0.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-dropzone": "^14.2.3",
@@ -26,8 +27,11 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
+    "test": "jest",
     "eject": "react-scripts eject"
+  },
+  "jest": {
+    "testEnvironment": "jsdom"
   },
   "eslintConfig": {
     "extends": [
@@ -46,5 +50,14 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@babel/core": "^7.23.2",
+    "@babel/preset-react": "^7.22.15",
+    "@testing-library/react": "^14.0.0",
+    "babel-jest": "^29.7.0",
+    "jest": "^27.5.1",
+    "jsdom": "^22.1.0",
+    "react-test-renderer": "^18.2.0"
   }
 }

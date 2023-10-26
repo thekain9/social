@@ -2,11 +2,12 @@ import { Typography, useTheme } from "@mui/material";
 import FlexBetween from "components/FlexBetween";
 import WidgetWrapper from "components/WidgetWrapper";
 
+// Define the AdvertWidget component
 const AdvertWidget = () => {
   const { palette } = useTheme();
-  const dark = palette.neutral.dark;
-  const main = palette.neutral.main;
-  const medium = palette.neutral.medium;
+  const dark = palette.neutral.dark; // Define the dark color from the theme palette
+  const main = palette.neutral.main; // Define the main color from the theme palette
+  const medium = palette.neutral.medium; // Define the medium color from the theme palette
 
   return (
     <WidgetWrapper>

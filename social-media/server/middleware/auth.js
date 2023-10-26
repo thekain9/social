@@ -33,3 +33,11 @@ export const verifyToken = async (req, res, next) => {
         res.status(500).json({ error: "An internal error occurred while verifying the token." });
     }
 };
+
+export const verifyAdmin = (req, res, next) => {
+    if (req.user.isAdmin) {
+        next();
+    } else {
+        res.status(403).send("Access denied! Admin only.");
+    }
+};

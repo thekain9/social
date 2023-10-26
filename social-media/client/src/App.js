@@ -1,3 +1,4 @@
+// Import necessary dependencies and components from external libraries
 import { BrowserRouter, Navigate, Routes, Route } from 'react-router-dom';
 import HomePage from 'scenes/homePage';
 import LoginPage from 'scenes/loginPage';
@@ -9,8 +10,12 @@ import { createTheme } from '@mui/material';
 import { themeSettings } from 'theme';
 
 function App() {
+   // Use the useSelector hook to access the 'mode' property from the Redux state
   const mode = useSelector((state) => state.mode);
+
+    // Create a Material-UI theme based on the selected mode using useMemo to optimize performance
   const theme = useMemo(() => createTheme(themeSettings(mode)), [mode]);
+  
   return (
     <div className="App">
       <BrowserRouter>

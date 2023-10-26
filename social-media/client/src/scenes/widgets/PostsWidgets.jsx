@@ -1,41 +1,64 @@
-import { useEffect } from "react";
+import React, { useEffect, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setPosts } from "state";
 import PostWidget from "./PostWidget";
 
+// Define the PostsWidget component
 const PostsWidget = ({ userId, isProfile = false }) => {
   const dispatch = useDispatch();
   const posts = useSelector((state) => state.posts);
   const token = useSelector((state) => state.token);
 
-  const getPosts = async () => {
-    const response = await fetch("http://localhost:3002/posts", {
-      method: "GET",
-      headers: { Authorization: `Bearer ${token}` },
-    });
-    const data = await response.json();
-    dispatch(setPosts({ posts: data }));
-  };
-
-  const getUserPosts = async () => {
-    const response = await fetch(
-      `http://localhost:3002/posts/${userId}/posts`,
-      {
+   // Function to fetch and set posts
+  const getPosts = useCallback(async () => {
+    try {
+      const response = await fetch("http://localhost:3002/posts", {
         method: "GET",
         headers: { Authorization: `Bearer ${token}` },
+      });
+  
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
       }
-    );
-    const data = await response.json();
-    dispatch(setPosts({ posts: data }));
-  };
+  
+      const data = await response.json();
+      dispatch(setPosts({ posts: data }));
+    } catch (error) {
+      console.error("Fetching posts failed with status: ", error.message);
+    }
+  }, [token, dispatch]);
+  
+   // Function to fetch and set user-specific posts
+  const getUserPosts = useCallback(async () => {
+    try {
+      const response = await fetch(
+        `http://localhost:3002/posts/${userId}/posts`,
+        {
+          method: "GET",
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+  
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+  
+      const data = await response.json();
+      dispatch(setPosts({ posts: data }));
+    } catch (error) {
+      console.error("Fetching user posts failed: ", error);
+    }
+  }, [token, dispatch, userId]);
 
   useEffect(() => {
     if (isProfile) {
-      getUserPosts();
+      getUserPosts(); // Fetch and set user-specific posts if the component is used in a user profile
     } else {
-      getPosts();
+      getPosts(); // Fetch and set general posts if not in a user profile
     }
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [getPosts, getUserPosts, isProfile]);
+
+  
 
   return (
     <>

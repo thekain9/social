@@ -1,3 +1,4 @@
+// Import the 'Box' component from Material-UI
 import { Box } from "@mui/material";
 import { styled } from "@mui/system";
 

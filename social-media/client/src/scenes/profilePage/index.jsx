@@ -8,23 +8,25 @@ import MyPostWidget from "scenes/widgets/MyPostWidget";
 import PostsWidget from "scenes/widgets/PostsWidgets";
 import UserWidget from "scenes/widgets/UserWidget";
 
+// Define the ProfilePage component
 const ProfilePage = () => {
   const [user, setUser] = useState(null);
-  const { userId } = useParams();
-  const token = useSelector((state) => state.token);
-  const isNonMobileScreens = useMediaQuery("(min-width:1000px)");
+  const { userId } = useParams(); // Get the user ID from the URL parameters
+  const token = useSelector((state) => state.token); // Get the user's authentication token from Redux state
+  const isNonMobileScreens = useMediaQuery("(min-width:1000px)"); // Determine if the screen is non-mobile
 
+  // Function to fetch user data based on the user ID and token
   const getUser = async () => {
     const response = await fetch(`http://localhost:3002/users/${userId}`, {
       method: "GET",
       headers: { Authorization: `Bearer ${token}` },
     });
     const data = await response.json();
-    setUser(data);
+    setUser(data); // Set the user data in the component's state
   };
 
   useEffect(() => {
-    getUser();
+    getUser(); // Fetch user data when the component mounts
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   if (!user) return null;

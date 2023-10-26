@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
-
+// Create an array of unique ObjectId instances for user IDs, I created 8 just to start with, 
+//the social media has some dummy users. 
 const userIds = [
   new mongoose.Types.ObjectId(),
   new mongoose.Types.ObjectId(),
@@ -11,6 +12,7 @@ const userIds = [
   new mongoose.Types.ObjectId(),
 ];
 
+// Define an array of user objects
 export const users = [
   {
     _id: userIds[0],

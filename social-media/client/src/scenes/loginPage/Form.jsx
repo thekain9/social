@@ -1,4 +1,7 @@
+// Import necessary libraries and components
 import { useState } from "react";
+import React, { useEffect } from 'react';
+import axios from "axios";
 import {
   Box,
   Button,
@@ -16,6 +19,7 @@ import { setLogin } from "state";
 import Dropzone from "react-dropzone";
 import FlexBetween from "components/FlexBetween";
 
+// Define validation schemas for registration and login forms
 const registerSchema = yup.object().shape({
   firstName: yup.string().required("required"),
   lastName: yup.string().required("required"),
@@ -31,6 +35,7 @@ const loginSchema = yup.object().shape({
   password: yup.string().required("required"),
 });
 
+// Initial values for registration and login forms
 const initialValuesRegister = {
   firstName: "",
   lastName: "",
@@ -46,7 +51,9 @@ const initialValuesLogin = {
   password: "",
 };
 
+// Define the Form component
 const Form = () => {
+  // State variables
   const [pageType, setPageType] = useState("login");
   const [error, setError] = useState(null); // Added error state
   const { palette } = useTheme();
@@ -56,6 +63,7 @@ const Form = () => {
   const isLogin = pageType === "login";
   const isRegister = pageType === "register";
 
+// Register a user on form submission
   const register = async (values, onSubmitProps) => {
     const formData = new FormData();
     for (let value in values) {
@@ -80,6 +88,7 @@ const Form = () => {
     }
   };
 
+// Handle user login on form submission
   const login = async (values, onSubmitProps) => {
     const loggedInResponse = await fetch("http://localhost:3002/auth/login", {
       method: "POST",
@@ -111,6 +120,42 @@ const Form = () => {
     if (isLogin) login(values, onSubmitProps);
     if (isRegister) register(values, onSubmitProps);
   };
+// Handle the OAuth login process
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const code = urlParams.get('code');
+    const service = urlParams.get('service');
+    
+    if (code && service) {
+      let endpoint;
+      if (service === 'google') {
+        endpoint = 'http://localhost:3002/auth/google-login';
+      } else if (service === 'github') {
+        endpoint = 'http://localhost:3002/auth/github-login';
+      }
+
+      axios.post(endpoint, { code })
+        .then(response => {
+          console.log(response.data); // Handle the response accordingly
+        })
+        .catch(error => {
+          console.error(error);
+        });
+    }
+  }, []);
+
+  //Login with Google
+  const handleLogin = () => {
+    const CLIENT_ID = "180057569407-tp2sl38ut0ppbe0ntpvf383ka7eo0itt.apps.googleusercontent.com";
+    window.location.href = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${CLIENT_ID}&redirect_uri=http://localhost:3002/auth/google/callback&response_type=code&scope=openid%20profile%20email`;
+};
+
+  //Login with Github
+const handleGitHubLogin = () => {
+  const CLIENT_ID = "48a20a073b561030f8c7";
+  window.location.href = `https://github.com/login/oauth/authorize?client_id=${CLIENT_ID}&redirect_uri=http://localhost:3002/auth/github/callback&scope=user`;
+};
+
 
   return (
     <>
@@ -262,43 +307,67 @@ const Form = () => {
 
             {/* BUTTONS */}
             <Box>
-              <Button
-                fullWidth
-                type="submit"
-                sx={{
-                  m: "2rem 0",
-                  p: "1rem",
-                  backgroundColor: palette.primary.main,
-                  color: palette.background.alt,
-                  "&:hover": { color: palette.primary.main },
-                }}
-              >
-                {isLogin ? "LOGIN" : "REGISTER"}
-              </Button>
-              <Typography
-                onClick={() => {
-                  setPageType(isLogin ? "register" : "login");
-                  resetForm();
-                }}
-                sx={{
-                  textDecoration: "underline",
-                  color: palette.primary.main,
-                  "&:hover": {
-                    cursor: "pointer",
-                    color: palette.primary.light,
-                  },
-                }}
-              >
-                {isLogin
-                  ? "Don't have an account? Sign Up here."
-                  : "Already have an account? Login here."}
-              </Typography>
-            </Box>
-          </form>
-        )}
-      </Formik>
-    </>
-  );
+  <Button
+    fullWidth
+    type="submit"
+    style={{
+      margin: "2rem 0",
+      padding: "1rem",
+      backgroundColor: '#A6BF49', // Button color
+      color: '#F26052', // Text color
+    }}
+    // Add hover effects via CSS class or other methods since inline styles don't support pseudo-classes
+  >
+    {isLogin ? "LOGIN" : "REGISTER"}
+  </Button>
+  
+  <Typography
+    onClick={() => {
+      setPageType(isLogin ? "register" : "login");
+      resetForm();
+    }}
+    style={{
+      textDecoration: "underline",
+      color: 'white',
+      cursor: "pointer",
+      paddingBottom: '1rem',
+    }}
+  >
+    {isLogin ? "Don't have an account? Sign Up here." : "Already have an account? Login here."}
+  </Typography>
+  
+  <Button
+    onClick={handleLogin}
+    style={{
+      backgroundColor: '#F2CA52', // Button color
+      color: '#F26052', // Text color
+      width: '48%', // Takes up almost half the space
+      fontSize: '1.2rem', // Larger font size
+      marginRight: '4%', // Space between the buttons
+    }}
+    // Add hover effects via CSS class or other methods
+  >
+    {isLogin ? "Login with Google" : "Register with Google"}
+  </Button>
+
+  <Button
+    onClick={handleGitHubLogin}
+    style={{
+      backgroundColor: '#F2CA52', // Button color
+      color: '#F26052', // Text color
+      width: '48%', // Takes up almost half the space
+      fontSize: '1.2rem', // Larger font size
+    }}
+    // Add hover effects via CSS class or other methods
+  >
+    {isLogin ? "Login with GitHub" : "Register with GitHub"}
+  </Button>
+</Box>
+</form>
+)}
+</Formik>
+</>
+);
 };
 
 export default Form;

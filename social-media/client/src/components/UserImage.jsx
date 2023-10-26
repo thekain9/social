@@ -1,5 +1,7 @@
+// Import the 'Box' component from Material-UI
 import { Box } from "@mui/material";
 
+// Create a functional component named 'UserImage'
 const UserImage = ({ image, size = "60px" }) => {
   return (
     <Box width={size} height={size}>

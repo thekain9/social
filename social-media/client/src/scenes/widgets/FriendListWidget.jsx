@@ -5,13 +5,15 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setFriends } from "state";
 
+// Define the FriendListWidget component
 const FriendListWidget = ({ userId }) => {
-  const dispatch = useDispatch();
-  const { palette } = useTheme();
-  const token = useSelector((state) => state.token);
-  const user = useSelector((state) => state.user);
-  const friends = user ? user.friends : null;
+  const dispatch = useDispatch(); // Initialize the dispatch function from Redux
+  const { palette } = useTheme(); // Get the theme's palette
+  const token = useSelector((state) => state.token); // Get the token from Redux state
+  const user = useSelector((state) => state.user); // Get the user data from Redux state
+  const friends = user ? user.friends : null; // Get the friends array from the user data
 
+   // Function to fetch and set the user's friends
   const getFriends = async () => {
     const response = await fetch(
       `http://localhost:3002/users/${userId}/friends`,

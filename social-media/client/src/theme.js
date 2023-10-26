@@ -1,3 +1,4 @@
+//Colour and font to be used as reference for styling. 
 export const colorTokens = {
   grey: {
     0: "#F7F7F7",     // Lightest
@@ -20,44 +21,44 @@ export const themeSettings = (mode) => {
       mode: mode,
       ...(mode === "dark"
         ? {
-            // palette values for dark mode
-            primary: {
-              dark: colorTokens.primary[200],
-              main: colorTokens.primary[100],
-              light: colorTokens.primary[50],
-            },
-            neutral: {
-              dark: colorTokens.grey[300],
-              main: colorTokens.grey[200],
-              mediumMain: colorTokens.grey[100],
-              medium: colorTokens.grey[200], // adjusted to match available greys
-              light: colorTokens.grey[0],
-            },
-            background: {
-              default: colorTokens.grey[300],
-              alt: colorTokens.grey[200],
-            },
-          }
-        : {
-            // palette values for light mode
-            primary: {
-              dark: colorTokens.primary[300],
-              main: colorTokens.primary[100],
-              light: colorTokens.primary[50],
-            },
-            neutral: {
-              dark: colorTokens.grey[300],
-              main: colorTokens.grey[200],
-              mediumMain: colorTokens.grey[100],
-              medium: colorTokens.grey[200], 
-              light: colorTokens.grey[0],
-            },
-            background: {
-              default: colorTokens.primary[300],
-              alt: colorTokens.primary[300],
-            },
-            }),
-      },
+           // palette values for dark mode
+           primary: {
+            dark: colorTokens.primary[200],
+            main: colorTokens.primary[100],
+            light: colorTokens.primary[50],
+          },
+          neutral: {
+            dark: colorTokens.grey[300],
+            main: colorTokens.grey[200],
+            mediumMain: colorTokens.grey[100],
+            medium: colorTokens.grey[200], // adjusted to match available greys
+            light: colorTokens.grey[0],
+          },
+          background: {
+            default: '#000000', // Making the background black in dark mode
+            alt: '#000000', // You can adjust this as well if you want a different alternate color
+          },
+        }
+      : {
+          // palette values for light mode
+          primary: {
+            dark: colorTokens.primary[300],
+            main: colorTokens.primary[100],
+            light: colorTokens.primary[50],
+          },
+          neutral: {
+            dark: colorTokens.grey[300],
+            main: colorTokens.grey[200],
+            mediumMain: colorTokens.grey[100],
+            medium: colorTokens.grey[200], 
+            light: colorTokens.grey[0],
+          },
+          background: {
+            default: colorTokens.primary[300],
+            alt: colorTokens.primary[300],
+          },
+        }),
+    },
       typography: {
         fontFamily: ["Gabarito', sans-serif"].join(","),
         fontSize: 12,

@@ -1,20 +1,22 @@
-import express from "express";
-import bodyParser from "body-parser";
-import mongoose from "mongoose";
-import cors from "cors";
-import dotenv from "dotenv";
-import multer from "multer";
-import helmet from "helmet";
-import morgan from "morgan";
-import path from "path";
-import { fileURLToPath } from "url";
-import authRoutes from "./routes/auth.js";
-import userRoutes from "./routes/users.js";
-import postRoutes from "./routes/posts.js";
-import { register } from "./controllers/auth.js";
-import { createPost } from "./controllers/post.js";
-import { verifyToken } from "./middleware/auth.js";
+// Import required dependencies and modules
+import express from "express"; // Import the Express.js framework
+import bodyParser from "body-parser"; // Middleware for parsing request bodies
+import mongoose from "mongoose"; // MongoDB ORM library
+import cors from "cors"; // Middleware for handling CORS (Cross-Origin Resource Sharing)
+import dotenv from "dotenv"; // Load environment variables from a .env file
+import multer from "multer"; // Middleware for handling file uploads
+import helmet from "helmet"; // Middleware for securing HTTP headers
+import morgan from "morgan"; // Middleware for HTTP request logging
+import path from "path"; // Node.js module for handling file paths
+import { fileURLToPath } from "url"; // Convert file URL to a file path
+import authRoutes from "./routes/auth.js"; // Import authentication routes
+import userRoutes from "./routes/users.js"; // Import user-related routes
+import postRoutes from "./routes/posts.js"; // Import post-related routes
+import { register } from "./controllers/auth.js"; // Import authentication controller for registration
+import { createPost } from "./controllers/post.js"; // Import controller for creating posts
+import { verifyToken } from "./middleware/auth.js"; // Middleware for token verification
 
+// dotenv.config();
 
 /* CONFIGURATIONS */
 const __filename = fileURLToPath(import.meta.url);
@@ -32,6 +34,8 @@ app.use("/assets", express.static(path.join(__dirname, "public/assets")));
 
 
 
+
+
 /* FILE STORAGE */
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -43,9 +47,13 @@ const storage = multer.diskStorage({
 });
 const upload = multer({ storage });
 
+
+
+
 /* ROUTES WITH FILES */
 app.post("/auth/register", upload.single("picture"), register);
 app.post("/posts", verifyToken, upload.single("picture"), createPost);
+
 
 /* ROUTES */
 app.use("/auth", authRoutes);
@@ -54,9 +62,12 @@ app.use("/posts", postRoutes);
 
 
 
+
+
 /* 404 NOT FOUND MIDDLEWARE */
 app.use((req, res, next) => {
-    res.status(404).send('Sorry, we cannot find that!');
+  console.log(req)
+    res.status(404).send('Sorry, we cannot find that, not found:(!');
 });
 
 /* ERROR HANDLING MIDDLEWARE */

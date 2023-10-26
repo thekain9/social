@@ -1,9 +1,13 @@
+import React, { useEffect } from 'react';
 import { Box, Typography, useTheme, useMediaQuery } from "@mui/material";
 import Form from "./Form";
 
+// Define the LoginPage component
 const LoginPage = () => {
   const theme = useTheme();
   const isNonMobileScreens = useMediaQuery("(min-width: 1000px)");
+
+
   return (
     <Box>
       <Box
@@ -13,7 +17,7 @@ const LoginPage = () => {
         textAlign="center"
       >
         <Typography fontWeight="bold" variant="h1" color="primary">
-          GORUMET
+          GOURMET
         </Typography>
       </Box>
 
@@ -28,6 +32,7 @@ const LoginPage = () => {
           COOK, CAPTURE, CONNECT
         </Typography>
         <Form />
+        
       </Box>
     </Box>
   );
