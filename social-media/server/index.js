@@ -16,8 +16,6 @@ import { register } from "./controllers/auth.js"; // Import authentication contr
 import { createPost } from "./controllers/post.js"; // Import controller for creating posts
 import { verifyToken } from "./middleware/auth.js"; // Middleware for token verification
 
-// dotenv.config();
-
 /* CONFIGURATIONS */
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -32,10 +30,6 @@ app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }));
 app.use(cors());
 app.use("/assets", express.static(path.join(__dirname, "public/assets")));
 
-
-
-
-
 /* FILE STORAGE */
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -47,22 +41,14 @@ const storage = multer.diskStorage({
 });
 const upload = multer({ storage });
 
-
-
-
 /* ROUTES WITH FILES */
 app.post("/auth/register", upload.single("picture"), register);
 app.post("/posts", verifyToken, upload.single("picture"), createPost);
-
 
 /* ROUTES */
 app.use("/auth", authRoutes);
 app.use("/users", userRoutes);
 app.use("/posts", postRoutes);
-
-
-
-
 
 /* 404 NOT FOUND MIDDLEWARE */
 app.use((req, res, next) => {

@@ -1,5 +1,5 @@
 // Import necessary libraries and components
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   ChatBubbleOutlineOutlined,
   FavoriteBorderOutlined,
@@ -32,15 +32,18 @@ const PostWidget = ({
 
   const { palette } = useTheme(); // Get theme colors
   const main = palette.neutral.main; // Define the main color from the theme
-  const primary = palette.primary.main; // Define the primary color from the theme
+  // const primary = palette.primary.main; // Define the primary color from the theme
   const loggedInUserFirstName = useSelector((state) => state.user.firstName); // Get user's first name from Redux state
   const loggedInUserLastName = useSelector((state) => state.user.lastName); // Get user's last name from Redux state
 
   // Initialize state variables for editing the post
   const [editingPost, setEditingPost] = useState(false);
   const [editedPostText, setEditedPostText] = useState(description);
-  const post = useSelector((state) => state.posts.find((p) => p._id === postId)); // Find the post by ID in Redux state
-
+  // const post = useSelector((state) => state.posts.find((p) => p._id === postId)); // Find the post by ID in Redux state
+  // Use the useEffect hook to update editedPostText when description changes
+  useEffect(() => {
+    setEditedPostText(description);
+  }, [description]);
   // Define an asynchronous function to add a comment to the post
   const addComment = async () => {
     const response = await fetch(`http://localhost:3002/posts/${postId}/comments`, {
@@ -104,6 +107,7 @@ const PostWidget = ({
 
       if (response.ok) {
         const updatedPost = await response.json();
+        console.log("Updated Description:", updatedPost.description);
         dispatch(editPost({ post: updatedPost })); // Dispatch an action to update the edited post in Redux state
         setEditingPost(false); // Set editing mode to false
       } else {
@@ -115,9 +119,6 @@ const PostWidget = ({
       console.error("An error occurred while editing the post:", error);
     }
   };
-
-  
-  
 
   return (
     <WidgetWrapper m="2rem 0">

@@ -62,12 +62,13 @@ export const authSlice = createSlice({
       state.posts = state.posts.filter((post) => post._id !== postId); // Remove a post by filtering it out
     },
     // Reducer for editing a post
-    editPost: (state, action) => {
-      const updatedPost = action.payload.post;
-      const postIndex = state.posts.findIndex((post) => post._id === updatedPost._id);
-      if (postIndex !== -1) {
+    editPost: (state, action) => {  // Function to edit a post in the state
+      const updatedPost = action.payload.post; // Extract the updated post data from the action
+      const postIndex = state.posts.findIndex((post) => post._id === updatedPost._id); // Find the index of the post to be edited in the state based on its _id
+      if (postIndex !== -1) { // Check if the post was found in the state (index is not -1)
         state.posts[postIndex] = updatedPost; // Replace the post with the updated post data
       }
+      console.log("Updating post in state:", action.payload.post);
     },
   },
 });
