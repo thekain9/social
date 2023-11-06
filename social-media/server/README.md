@@ -20,7 +20,7 @@ FoodieSocial is a social media app dedicated to food lovers. It's a platform whe
 - [Contributing](#contributing)
 
 **ADMIN CREDENTIALS**
-- **USERNAME**: manuelarias@admin
+- **USERNAME**: manuelarias@admin.com
 - **PASSWORD**: 123456789
 
 **Deployed on:** [www.gourmet-mern.online](www.gourmet-mern.online)
