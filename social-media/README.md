@@ -24,6 +24,7 @@ FoodieSocial is a social media app dedicated to food lovers. It's a platform whe
 - **PASSWORD**: 123456789
 
 **Deployed on:** [www.gourmet-mern.online](www.gourmet-mern.online)
+**GitHub Rep.:**[https://github.com/thekain9/social]
 
 **Please create an ENV file with the following information:**
 
