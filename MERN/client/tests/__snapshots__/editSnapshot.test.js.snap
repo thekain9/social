@@ -1,0 +1,15 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`EditComment Snapshot Test matches the snapshot 1`] = `
+<div>
+  <input
+    onChange={[Function]}
+    value="Original comment text"
+  />
+  <button
+    onClick={[Function]}
+  >
+    Save
+  </button>
+</div>
+`;
